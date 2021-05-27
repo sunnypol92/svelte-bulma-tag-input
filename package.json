@@ -16,6 +16,10 @@
     "Tags",
     "Input"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sunnypol92/svelte-bulma-tag-input"
+  },
   "author": "Suneesh S K",
   "license": "MIT",
   "devDependencies": {
