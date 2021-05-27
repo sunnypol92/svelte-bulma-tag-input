@@ -1,2 +1,2 @@
 # svelte-tag-input
-A rich addon for create input tags
+A rich component for svelte for input tags with bulma css.
