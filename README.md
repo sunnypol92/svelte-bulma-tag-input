@@ -8,3 +8,5 @@ A rich component for svelte for input tags with bulma css.
 # Usage
 
 <pre><code>import Tags from "svelte-bulma-tag-input";</code></pre>
+
+```<Tags bind:tags maxTags={5} />```
