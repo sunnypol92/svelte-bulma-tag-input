@@ -1,0 +1,27 @@
+{
+  "name": "svelte-bulma-tag-input",
+  "version": "1.0.0",
+  "description": "A rich component for svelte for input tags with bulma css",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "svelte": "src/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "keywords": [
+    "Svelte",
+    "Svelte3",
+    "Bulma",
+    "Tags",
+    "Input"
+  ],
+  "author": "Suneesh S K",
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^2.50.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^7.1.0",
+    "svelte": "^3.38.2"
+  }
+}
