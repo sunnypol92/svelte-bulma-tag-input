@@ -1,4 +1,4 @@
-<div class="field is-grouped is-grouped-multiline tag-selector">
+<div class="field is-grouped is-grouped-multiline tag-selector is-{has_error ? 'danger' : ''}">
   {#if tags.length > 0}
     {#each tags as tag, i}
       <div class="control">
@@ -62,6 +62,7 @@
     export let disabled = false;
     export let tagColor = 'primary';
     export let tagSize = 'normal';
+    export let has_error = false;
 
     $: _disabled = disabled || (maxTags && tags.length >= maxTags);
     $: _tags_left = maxTags ? maxTags - tags.length : 0;
