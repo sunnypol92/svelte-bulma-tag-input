@@ -1,8 +1,8 @@
 <div class="control">
-  <span class="tags has-addons">
-    <span class="tag is-primary is-marginless">{tag}</span>
+  <span class="tag is-primary">
+    {tag}
     {#if !disabled}
-      <span class="tag is-delete is-marginless" on:click={remove}></span>
+      <button class="delete is-small" on:click={remove}></button>
     {/if}
   </span>
 </div>

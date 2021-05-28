@@ -5,7 +5,8 @@
     border-radius: $input-radius;
     box-shadow: $input-shadow;
     align-items: center !important;
-    padding: 0.25rem;
+    padding-right: 0.25rem;
+    padding-left: 0.25rem;
     &:hover{
       border-color: $input-hover-border-color;
     }
@@ -17,6 +18,7 @@
       box-shadow: none;
       border: none;
       height: 2rem;
+      padding-left: 0;
       &:focus{
         border: none;
         box-shadow: none;
@@ -25,23 +27,10 @@
         background-color: $white;
       }
     }
-    .tags{
-      &:last-child {
-        margin-bottom: 0rem;
-      }
-    }
-    &.is-grouped{
-      &.is-grouped-multiline{
-        &:last-child{
-          margin-bottom: 0.75rem;
-        }
-        .control{
-          &:not(:last-child){
-            margin-right: 0.25rem;
-            margin-bottom: 0rem;
-          }
-        }
-      }
+    .control{
+      margin-top: 0.25rem !important;
+      margin-bottom: 0.25rem !important;
+      margin-right: 0.25rem !important;
     }
   }
 }

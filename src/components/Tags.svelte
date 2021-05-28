@@ -5,21 +5,23 @@
     {/each}
   {/if}
 
-  <div class="control is-expanded is-marginless">
-    <input
-      class="input"
-      type="text"
-      disabled={_disabled}
-      bind:value={tag}
-      on:keydown={createByKey}
-      on:keydown={removeByKey}
-      on:paste={createByPaste}
-      on:drop={createByDrop}
-    >
-  </div>
+  {#if !_disabled}
+    <div class="control is-expanded">
+      <input
+        class="input"
+        type="text"
+        disabled={_disabled}
+        bind:value={tag}
+        on:keydown={createByKey}
+        on:keydown={removeByKey}
+        on:paste={createByPaste}
+        on:drop={createByDrop}
+      >
+    </div>
+  {/if}
 </div>
 
-<p class="help has-text-grey is-marginless">
+<p class="help has-text-grey">
   {#if addKeyNames.length}
     <small class="has-text-success is-italic">{addKeyNames.join(' | ')}</small> creates tag.
   {:else}
@@ -31,7 +33,7 @@
   {/if}
 
   {#if maxTags}
-    <small class="is-pulled-right">Allowed <span class="has-text-success">{_tags_left}</span>/<span class="has-text-danger">{maxTags}</span></small>
+    <small>Allowed <span class="has-text-success">{_tags_left}</span>/<span class="has-text-danger">{maxTags}</span></small>
   {/if}
 </p>
 
