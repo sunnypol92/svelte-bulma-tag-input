@@ -1,7 +1,13 @@
 <div class="field is-grouped is-grouped-multiline tag-selector">
   {#if tags.length > 0}
-    {#each tags as tag, index}
-      <Tag {tag} {index} {disabled} on:remove={removeByClick} />
+    {#each tags as tag, i}
+      <div class="control">
+        <span class="tag is-primary">{tag}
+          {#if !disabled}
+            <button class="delete is-small" on:click={() => removeByClick(i)}></button>
+          {/if}
+        </span>
+      </div>
     {/each}
   {/if}
 
@@ -40,7 +46,6 @@
 <script>
     import {createEventDispatcher} from 'svelte';
     import KeyMap from '../helpers/keyMap.js';
-    import Tag from './Tag.svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -124,11 +129,10 @@
       }
     }
 
-    function removeByClick(e) {
+    function removeByClick(i) {
       if(disabled) return;
 
-      let index = e.detail.index;
-      tags.splice(index, 1);
+      tags.splice(i, 1);
       tags = tags;
 
       dispatch('change', {tags});
