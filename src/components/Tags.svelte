@@ -52,7 +52,7 @@
     let sizeMap = ['small', 'normal', 'medium', 'large'];
 
     export let tags = [];
-    export let addKeys = [13, 32];
+    export let addKeys = [13];
     export let removeKeys = [8];
     export let maxTags = 5;
     export let splitWith = ' ';
