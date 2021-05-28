@@ -2,9 +2,9 @@
   {#if tags.length > 0}
     {#each tags as tag, i}
       <div class="control">
-        <span class="tag is-primary">{tag}
+        <span class="tag is-{tagColor} is-{tagSize}">{tag}
           {#if !disabled}
-            <button class="delete is-small" on:click={() => removeByClick(i)}></button>
+            <button class="delete is-{tagRemoveButtonSize}" on:click={() => removeByClick(i)}></button>
           {/if}
         </span>
       </div>
@@ -52,6 +52,8 @@
     let tag = '';
     let addKeyNames = [];
     let removeKeyNames = [];
+    let tagRemoveButtonSize = 'small';
+    let sizeMap = ['small', 'normal', 'medium', 'large'];
 
     export let tags = [];
     export let addKeys = [13, 32];
@@ -62,12 +64,18 @@
     export let allowPaste = false;
     export let allowDrop = false;
     export let disabled = false;
+    export let tagColor = 'primary';
+    export let tagSize = 'normal';
 
     $: _disabled = disabled || (maxTags && tags.length >= maxTags);
     $: _tags_left = maxTags ? maxTags - tags.length : 0;
 
     $: addKeys.length && addKeys.forEach(key => setKeyName(key, addKeyNames));
     $: removeKeys.length && removeKeys.forEach(key => setKeyName(key, removeKeyNames));
+    $: if(tagSize && sizeMap.indexOf(tagSize) != -1) {
+        let index = sizeMap.indexOf(tagSize);
+        tagRemoveButtonSize = sizeMap[index-1] || 'small';
+      }
 
     $: setKeyName = (key, obj) => {
       let keyName = KeyMap[key];
