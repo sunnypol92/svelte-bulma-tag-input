@@ -18,6 +18,7 @@
         type="text"
         disabled={_disabled}
         bind:value={tag}
+        bind:this={tagInput}
         on:keydown={createByKey}
         on:keydown={removeByKey}
         on:paste={createByPaste}
@@ -45,6 +46,7 @@
 
     const dispatch = createEventDispatcher();
 
+    let tagInput;
     let tag = '';
     let addKeyNames = [];
     let removeKeyNames = [];
@@ -139,6 +141,8 @@
 
       tags.splice(i, 1);
       tags = tags;
+
+      tagInput && tagInput.focus();
 
       dispatch('change', {tags});
     }
