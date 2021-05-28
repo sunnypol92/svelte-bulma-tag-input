@@ -27,7 +27,7 @@
   {/if}
 </div>
 
-<p class="help has-text-grey">
+<p class="help has-text-grey is-marginless">
   {#if addKeyNames.length}
     <small class="has-text-success is-italic">{addKeyNames.join(' | ')}</small> creates tag.
   {:else}
