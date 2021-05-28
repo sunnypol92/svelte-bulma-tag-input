@@ -28,18 +28,14 @@
 </div>
 
 <p class="help has-text-grey is-marginless">
-  {#if addKeyNames.length}
-    <small class="has-text-success is-italic">{addKeyNames.join(' | ')}</small> creates tag.
-  {:else}
-    <small class="has-text-danger">No valid keys defined for create tags.</small>
-  {/if}
+  <small class="has-text-success">+ {addKeyNames.length ? addKeyNames.join(' / ') : 'No keys defined'}</small> |
 
   {#if removeKeyNames.length}
-    <small class="has-text-danger is-italic">{removeKeyNames.join(' | ')}</small> removes tag.
+    <small class="has-text-danger">- {removeKeyNames.join(' / ')}</small> |
   {/if}
 
   {#if maxTags}
-    <small>Allowed <span class="has-text-success">{_tags_left}</span>/<span class="has-text-danger">{maxTags}</span></small>
+    <small><span class="has-text-success">{_tags_left}</span>/<span class="has-text-danger">{maxTags}</span></small>
   {/if}
 </p>
 
