@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+// Import only what you need from Bulma
+@import "../node_modules/bulma/sass/utilities/_all";
+@import "../node_modules/bulma/sass/base/_all";
+@import "../node_modules/bulma/sass/elements/_all";
+@import "../node_modules/bulma/sass/form/_all";
+@import "../node_modules/bulma/sass/helpers/_all";
+
+//import tag input styles
+@import "./styles";
