@@ -16,6 +16,7 @@
       <input
         class="input"
         type="text"
+        {placeholder}
         disabled={_disabled}
         bind:value={tag}
         bind:this={tagInput}
@@ -64,7 +65,7 @@
     export let disabled = false;
     export let tagColor = 'primary';
     export let tagSize = 'normal';
-    export let has_error = false;
+    export let placeholder = null;
 
     $: _disabled = disabled || (maxTags && tags.length >= maxTags);
     $: _tags_left = maxTags ? maxTags - tags.length : 0;
