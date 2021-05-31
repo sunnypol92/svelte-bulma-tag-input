@@ -16,7 +16,7 @@ import Tags from "svelte-bulma-tag-input";
 ```
 
 ```javascript
-@import "<PATH>/node_modules/svelte-bulma-tag-input/src/styles";
+@import "<PATH>/node_modules/svelte-bulma-tag-input/src/scss/styles";
 ```
 ## Options
 
@@ -41,6 +41,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Author
 
-[Suneesh S K](https://github.com/sunnypol92/svelte-bulma-tag-input)
+[Suneesh S K](https://github.com/sunnypol92)
 
 ##### 2021
