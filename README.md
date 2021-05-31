@@ -6,11 +6,11 @@
 ## Install
 
 ```bash
-npm install svelte-bulma-tags-input --save
+npm install svelte-bulma-tag-input --save
 ```
 
 ```javascript
-import Tags from "svelte-bulma-tags-input";
+import Tags from "svelte-bulma-tag-input";
 
 <Tags bind:tags maxTags={5} />
 ```
