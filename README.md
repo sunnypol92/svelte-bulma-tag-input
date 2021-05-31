@@ -30,7 +30,6 @@ import Tags from "svelte-bulma-tags-input";
 | allowDuplicates | `Boolean` | `false` | Set the entered tags to be duplicatable |
 | tagColor | `String` | `primary` | Set the tag color |
 | tagSize | `String` | `normal` | Set the tag size |
-| tagSize | `String` | `normal` | Set the tag size |
 | placeholder | `String` | `null` | Set a placeholder |
 | on:change | `Function` | `undefined` | To get the event fire from the tag change |
 
