@@ -1,32 +1,40 @@
-<div class="field is-grouped is-grouped-multiline tag-selector is-{hasError ? 'danger' : ''}">
-  {#if tags.length > 0}
-    {#each tags as tag, i}
-      <div class="control">
-        <span class="tag is-{tagColor} is-{tagSize}">{tag}
-          {#if !disabled}
-            <button class="delete is-{tagRemoveButtonSize}" on:click={() => removeByClick(i)}></button>
-          {/if}
-        </span>
-      </div>
-    {/each}
-  {/if}
+<div class="input is-{inputSize} is-{hasError ? 'danger' : ''} {disabled ? 'is-disabled' : ''} tag-selector">
+  <div class="field is-grouped is-grouped-multiline">
+    {#if tags.length > 0}
+      {#each tags as tag, i}
+        <div class="control">
+          <span class="tag is-{tagColor} is-{tagSize}">{tag}
+            {#if !disabled}
+              <button class="delete is-{tagRemoveButtonSize}" on:click={() => removeByClick(i)}></button>
+            {/if}
+          </span>
+        </div>
+      {/each}
+    {/if}
 
-  {#if !_disabled}
-    <div class="control is-expanded">
-      <input
-        class="input"
-        type="text"
-        {placeholder}
-        disabled={_disabled}
-        bind:value={tag}
-        bind:this={tagInput}
-        on:keydown={createByKey}
-        on:keydown={removeByKey}
-        on:paste={createByPaste}
-        on:drop={createByDrop}
-      >
-    </div>
-  {/if}
+    {#if !_disabled}
+      <div class="control is-expanded">
+        <input
+          class="input"
+          type="text"
+          placeholder={(tags.length == 0) ? placeholder : ''}
+          disabled={_disabled}
+          bind:value={tag}
+          bind:this={tagInput}
+          on:keydown={createByKey}
+          on:keydown={removeByKey}
+          on:paste={createByPaste}
+          on:drop={createByDrop}
+        >
+      </div>
+    {/if}
+
+    {#if disabled && tags.length == 0 && placeholder}
+      <div class="control is-expanded">
+        <input class="input" type="text" {placeholder} disabled={_disabled}>
+      </div>
+    {/if}
+  </div>
 </div>
 
 <p class="help has-text-grey is-marginless">
@@ -42,125 +50,134 @@
 </p>
 
 <script>
-    import {createEventDispatcher} from 'svelte';
-    import KeyMap from '../helpers/keyMap.js';
+  import {createEventDispatcher} from 'svelte';
+  import KeyMap from '../helpers/keyMap.js';
 
-    const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
-    let tagInput;
-    let tag = '';
-    let addKeyNames = [];
-    let removeKeyNames = [];
-    let tagRemoveButtonSize = 'small';
-    let sizeMap = ['small', 'normal', 'medium', 'large'];
+  let tagInput;
+  let tag = '';
+  let addKeyNames = [];
+  let removeKeyNames = [];
+  let tagRemoveButtonSize = 'small';
+  let sizeMap = ['small', 'normal', 'medium', 'large'];
 
-    export let tags = [];
-    export let addKeys = [13];
-    export let removeKeys = [8];
-    export let maxTags = 5;
-    export let splitWith = ' ';
-    export let allowDuplicates = false;
-    export let allowPaste = false;
-    export let allowDrop = false;
-    export let disabled = false;
-    export let tagColor = 'primary';
-    export let tagSize = 'normal';
-    export let hasError = false;
-    export let placeholder = null;
+  export let tags = [];
+  export let addKeys = [13];
+  export let removeKeys = [8];
+  export let maxTags = 5;
+  export let splitWith = ' ';
+  export let allowDuplicates = false;
+  export let allowPaste = false;
+  export let allowDrop = false;
+  export let disabled = false;
+  export let tagColor = 'primary';
+  export let tagSize = 'normal';
+  export let hasError = false;
+  export let placeholder = null;
+  export let inputSize = 'normal';
 
-    $: _disabled = disabled || (maxTags && tags.length >= maxTags);
-    $: _tags_left = maxTags ? maxTags - tags.length : 0;
+  $: _disabled = disabled || (maxTags && tags.length >= maxTags);
+  $: _tags_left = maxTags ? maxTags - tags.length : 0;
 
-    $: addKeys.length && addKeys.forEach(key => setKeyName(key, addKeyNames));
-    $: removeKeys.length && removeKeys.forEach(key => setKeyName(key, removeKeyNames));
-    $: if(tagSize && sizeMap.indexOf(tagSize) != -1) {
-        let index = sizeMap.indexOf(tagSize);
-        tagRemoveButtonSize = sizeMap[index-1] || 'small';
-      }
-
-    $: setKeyName = (key, obj) => {
-      let keyName = KeyMap[key];
-      if(keyName) {
-        let keyNameLowerCase = keyName.toLowerCase();
-        keyName = keyName.charAt(0).toUpperCase() + keyNameLowerCase.slice(1);
-        obj.push(keyName);
-      }
+  $: addKeys.length && addKeys.forEach(key => setKeyName(key, addKeyNames));
+  $: removeKeys.length && removeKeys.forEach(key => setKeyName(key, removeKeyNames));
+  $: if(tagSize && sizeMap.indexOf(tagSize) != -1) {
+      let index = sizeMap.indexOf(tagSize);
+      tagRemoveButtonSize = sizeMap[index-1] || 'small';
     }
 
-    function createByKey(e) {
-      if(addKeys && addKeys.indexOf(e.keyCode) != -1) {
-        e.preventDefault();
-        addTag();
-      }
+  $: setKeyName = (key, obj) => {
+    let keyName = KeyMap[key];
+    if(keyName) {
+      let keyNameLowerCase = keyName.toLowerCase();
+      keyName = keyName.charAt(0).toUpperCase() + keyNameLowerCase.slice(1);
+      obj.push(keyName);
     }
+  }
 
-    function createByPaste(e) {
-      if(!allowPaste) return;
-
-      let data = '';
-
-      if(window.clipboardData) {
-        data = window.clipboardData.getData('Text');
-      }
-
-      if(e.clipboardData) {
-        data = e.clipboardData.getData('text/plain');
-      }
-
-      if(data) {
-        let chunks = data.split(splitWith).map(s => s.trim());
-        if(chunks) {
-          chunks.forEach(tag => addTag(tag));
-        }
-      }
-    }
-
-    function createByDrop(e) {
-      if(!allowDrop) return;
-
+  function createByKey(e) {
+    if(addKeys && addKeys.indexOf(e.keyCode) != -1) {
       e.preventDefault();
+      addTag();
+    }
+  }
 
-      let data = e.dataTransfer.getData("Text");
-      if(data) {
-        let chunks = data.split(splitWith).map(s => s.trim());
-        if(chunks) {
-          chunks.forEach(tag => addTag(tag));
-        }
-      }
+  function createByPaste(e) {
+    if(!allowPaste) return;
+
+    let data = '';
+
+    if(window.clipboardData) {
+      data = window.clipboardData.getData('Text');
     }
 
-    function removeByKey(e) {
-      if(removeKeys && removeKeys.indexOf(e.keyCode) != -1 && tag === '') {
-        tags.pop();
-        tags = tags;
-
-        dispatch('change', {tags});
-      }
+    if(e.clipboardData) {
+      data = e.clipboardData.getData('text/plain');
     }
 
-    function removeByClick(i) {
-      if(disabled) return;
+    if(data) {
+      let chunks = data.split(splitWith).map(s => s.trim());
+      if(chunks) {
+        chunks.forEach(tag => {
+          if(tags.length < maxTags){
+            addTag(tag)
+          }
+        });
+      }
+    }
+  }
 
-      tags.splice(i, 1);
+  function createByDrop(e) {
+    if(!allowDrop) return;
+
+    e.preventDefault();
+
+    let data = e.dataTransfer.getData("Text");
+    if(data) {
+      let chunks = data.split(splitWith).map(s => s.trim());
+      if(chunks) {
+        chunks.forEach(tag => {
+          if(tags.length < maxTags){
+            addTag(tag)
+          }
+        });
+      }
+    }
+  }
+
+  function removeByKey(e) {
+    if(removeKeys && removeKeys.indexOf(e.keyCode) != -1 && tag === '') {
+      tags.pop();
       tags = tags;
 
+      dispatch('change', {tags});
+    }
+  }
+
+  function removeByClick(i) {
+    if(disabled) return;
+
+    tags.splice(i, 1);
+    tags = tags;
+
+    dispatch('change', {tags});
+
+    setTimeout(() => {
       tagInput && tagInput.focus();
+    }, 10);
+  }
 
-      dispatch('change', {tags});
-    }
+  function addTag(_tag = '') {
+    let newTag = _tag || tag;
+    newTag = newTag.trim();
 
-    function addTag(_tag = '') {
-      if(_disabled) return;
+    if(!newTag || _disabled || (!allowDuplicates && tags.includes(newTag))) return;
 
-      let newTag = _tag || tag;
-      newTag = newTag.trim();
+    tags.push(newTag);
+    tags = tags;
+    tag = '';
 
-      if(!newTag || _disabled || (!allowDuplicates && tags.includes(newTag))) return;
-
-      tags.push(newTag);
-      tags = tags;
-      tag = '';
-
-      dispatch('change', {tags});
-    }
+    dispatch('change', {tags});
+  }
 </script>

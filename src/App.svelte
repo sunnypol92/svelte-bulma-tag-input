@@ -3,7 +3,7 @@
 </div>
 
 <script>
-	import Tags from "svelte-bulma-tag-input";
+	import Tags from "./components/Tags.svelte";
 
 	export let tags = [];
 </script>

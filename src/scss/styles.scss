@@ -1,43 +1,48 @@
 .tag-selector{
-  &.field{
-    border: solid 1px $input-border-color;
-    background: $input-background-color;
-    border-radius: $input-radius;
-    box-shadow: $input-shadow;
-    align-items: center !important;
-    padding-right: 0.75rem;
-    padding-left: 0.75rem;
-    min-height: 2.5rem;
-    &:hover{
-      border-color: $input-hover-border-color;
-    }
-    &:focus-within{
-      border-color: $input-focus-border-color;
-      box-shadow: $input-focus-box-shadow-size $input-focus-box-shadow-color;
-    }
-    &.is-danger{
-      border-color: $danger;
-      &:focus-within{
-        box-shadow: $input-focus-box-shadow-size lighten($danger, 25%);
-      }
-    }
+  min-height: $input-height;
+  height: auto !important;
+  display: inherit !important;
+  &.is-normal{
     input{
+      font-size: $size-normal;
+    }
+  }
+  &.is-small{
+    input{
+      font-size: $size-small;
+    }
+  }
+  &.is-medium{
+    input{
+      font-size: $size-medium;
+    }
+  }
+  &.is-large{
+    input{
+      font-size: $size-large;
+    }
+  }
+  &:focus-within{
+    border-color: $input-focus-border-color;
+    box-shadow: $input-focus-box-shadow-size $input-focus-box-shadow-color;
+  }
+  &.is-disabled{
+    background-color: $input-disabled-background-color;
+    border-color: $input-disabled-border-color;
+    box-shadow: none;
+    color: $input-disabled-color;
+  }
+  .field{
+    align-items: center !important;
+    input{
+      height: auto;
       box-shadow: none;
       border: none;
-      height: 2rem;
-      padding-left: 0;
+      padding: 0;
       &:focus{
         border: none;
         box-shadow: none;
       }
-      &:disabled{
-        background-color: $white;
-      }
-    }
-    .control{
-      margin-top: 0.25rem !important;
-      margin-bottom: 0.25rem !important;
-      margin-right: 0.25rem !important;
     }
   }
 }
